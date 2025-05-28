@@ -8,13 +8,16 @@ import pandas as pd
 import re
 
 data = pd.read_csv(
-  '/PATH-TO-DATA/train.csv',
+  'data/train.csv',
   names=['sentiment', 'title', 'review']
 )
 
+# Ignore reviews with a neutral sentiment
+data = data[data.sentiment != 3]
+
 # Access the corpus and target variables
 X = data.review
-y = data.sentiment.replace({1:'Negative', 2:'Positive'})
+y = data.sentiment.replace({1:'Negative', 2:'Negative', 4:'Positive', 5:'Positive'})
 
 # train test splitting
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
@@ -27,7 +30,7 @@ preprocessor = lambda text: re.sub(r'[^a-z ]', '', text.lower())
 pipe = Pipeline([
   ('vec', CountVectorizer(stop_words='english', min_df=1000, preprocessor=preprocessor)),
   ('tfid', TfidfTransformer()),
-  ('lr', SGDClassifier(loss='log'))
+  ('lr', SGDClassifier(loss='log_loss'))
 ])
 
 # fit the model to the data
