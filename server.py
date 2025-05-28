@@ -19,7 +19,7 @@ def predict():
     text = data.get('text', '')
 
     if not text:
-        return jsonify({'error': 'No text provided'}), 400
+        return jsonify({'error': 'No text provided'})
 
     # Usa il modello per predire probabilità
     probs = pipe.predict_proba([text])
