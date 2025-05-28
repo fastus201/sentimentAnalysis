@@ -1,6 +1,4 @@
-### Progetto di Sentiment Analysis - NLP
-
-### Sentiment Analysis:
+Sentiment Analysis:
 
 -Serve per analizzare il contenuto testuale per capire il tipo di sentimento espresso.
 -Diventa utile per: scovare i trend, analizzare le notizie di finanza e le opinioni dei compratori.
