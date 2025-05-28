@@ -6,6 +6,13 @@ from sklearn.metrics import classification_report
 
 import pandas as pd
 import re
+import joblib
+
+
+# We'll use this function to replace numbers from the string
+def preprocessor(text):
+    return re.sub(r'[^a-z ]', '', text.lower())
+
 
 data = pd.read_csv(
   'data/train.csv',
@@ -22,8 +29,6 @@ y = data.sentiment.replace({1:'Negative', 2:'Negative', 4:'Positive', 5:'Positiv
 # train test splitting
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
 
-# We'll use this function to replace numbers from the string
-preprocessor = lambda text: re.sub(r'[^a-z ]', '', text.lower())
 
 # construct the pipeline with the procedural steps to
 # process the data and cast predictions
@@ -35,3 +40,5 @@ pipe = Pipeline([
 
 # fit the model to the data
 model = pipe.fit(X_train, y_train)
+
+joblib.dump(pipe, 'model/sentiment_model.pkl')
